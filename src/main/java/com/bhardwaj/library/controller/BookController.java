@@ -22,60 +22,30 @@ import com.bhardwaj.library.service.BookService;
 public class BookController {
 	@Autowired
 	private BookService bookService;
-	@Autowired
-	private AuthorService authorService;
 
 	@GetMapping("/book")
 	public List<Book> getAllBooks() {
-		return bookService.findAll();
+		return bookService.getAllBooks();
 	}
 	
 	@GetMapping("/book/{id}")
 	public Book getBook(@PathVariable String id) {
-		Book book = bookService.findById(Integer.parseInt(id)).orElse(null);
-		return book;
+		return this.bookService.getBookById(id);
 	}
 	@CrossOrigin("*")
 	@PostMapping("/book")
 	public Book addBook(@RequestBody RequestedBookModel requestedBookModel) {
-		// get author
-		int authorId = Integer.parseInt(requestedBookModel.getAuthor());
-		Author author = authorService.findById(authorId).orElse(null);
-		//ensure that the book with same code does not exist
-		Book testBook = bookService.findByBookCode(requestedBookModel.getBookCode());
-		if(testBook!=null) {
-			return null;
-		}
-		// create a book
-		Book book = new Book();
-		book.setBookCode(requestedBookModel.getBookCode());
-		book.setBookName(requestedBookModel.getBookName());
-		book.setDateAdded(requestedBookModel.getDateAdded());
-		book.setAuthor(author);
-		// save this
-		bookService.save(book);
-		return book;
+		return this.bookService.addBook(requestedBookModel);
 	}
 	@CrossOrigin("*")
 	@PutMapping("/book")
 	public Book updateBook(@RequestBody RequestedBookModel requestedBookModel) {
-		// get author
-		int authorId = Integer.parseInt(requestedBookModel.getAuthor());
-		Author author = authorService.findById(authorId).orElse(null);
-		// get the existing book
-		Book book = bookService.findByBookCode(requestedBookModel.getBookCode());
-		book.setBookName(requestedBookModel.getBookName());
-		book.setAuthor(author);
-
-		// save this
-		bookService.save(book);
-		return book;
+		return this.bookService.updateBook(requestedBookModel);
 	}
 	@CrossOrigin("*")
 	@DeleteMapping("/book/{id}")
 	public Book deleteBook(@PathVariable String id) {
-		bookService.deleteById(Integer.parseInt(id));
-		return null;
+		return this.bookService.deleteBookById(id);
 	}
 
 }
