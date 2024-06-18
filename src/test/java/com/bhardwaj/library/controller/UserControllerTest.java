@@ -1,13 +1,10 @@
 package com.bhardwaj.library.controller;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,39 +13,37 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.bhardwaj.library.model.UserCredentialsModel;
+import com.bhardwaj.library.service.UserService;
 
-import com.bhardwaj.library.entity.Author;
-import com.bhardwaj.library.service.AuthorService;
-
-//@SpringBootTest
 @ExtendWith(MockitoExtension.class)
-@WebMvcTest(AuthorController.class)
-public class AuthorControllerTest {
+@WebMvcTest(UserController.class)
+public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private AuthorService authorService;
+    private UserService userService;
 
-    private List<Author> authors;
+    private UserCredentialsModel credentials;
 
     @BeforeEach
     public void setUp() {
-        Author author1 = new Author(1, "Author One");
-        Author author2 = new Author(2, "Author Two");
-        authors = Arrays.asList(author1, author2);
+        credentials = new UserCredentialsModel("root", "root");
     }
 
     @Test
-    public void testGetAll() throws Exception {
-        when(authorService.getAuthors()).thenReturn(authors);
+    public void testVerifyLoginCredentials() throws Exception {
+        when(userService.verifyLoginCredentials(any(UserCredentialsModel.class))).thenReturn(true);
 
-        mockMvc.perform(get("/author"))
+        mockMvc.perform(post("/verify-login-credentials")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\": \"root\", \"password\": \"root\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].authorName", is("Author One")))
-                .andExpect(jsonPath("$[1].authorName", is("Author Two")));
+                .andExpect(jsonPath("$").value(true));
     }
 }

@@ -55,7 +55,6 @@ public class BookControllerTest {
 
         mockMvc.perform(get("/book"))
                 .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].bookName", is("Book One")))
                 .andExpect(jsonPath("$[1].bookName", is("Book Two")));
     }
@@ -101,7 +100,7 @@ public class BookControllerTest {
 
     @Test
     public void testDeleteBook() throws Exception {
-    	// CHECK THIS
+    	// SEE THIS AGAIN
         mockMvc.perform(delete("/book/1"))
                 .andExpect(status().isOk());
     }

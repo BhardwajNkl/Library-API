@@ -66,7 +66,6 @@ public class BookServiceTest {
 
     @Test
     public void testGetBookByIdNotFound() {
-    	// SEE: use a different id
         when(bookRepository.findById(1)).thenReturn(Optional.empty());
 
         Book result = bookService.getBookById("1");
@@ -107,7 +106,7 @@ public class BookServiceTest {
 
     @Test
     public void testDeleteBookById() {
-    	// SEE THIS
+    	// SEE THIS AGAIN
         doNothing().when(bookRepository).deleteById(1);
 
         Book result = bookService.deleteBookById("1");
