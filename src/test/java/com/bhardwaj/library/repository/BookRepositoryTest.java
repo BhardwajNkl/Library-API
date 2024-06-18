@@ -1,13 +1,11 @@
 package com.bhardwaj.library.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -32,7 +30,7 @@ public class BookRepositoryTest {
     @Test
     public void testFindAll() {
     	Author authorEntity = new Author();
-    	authorEntity.setAuthorName("John Mcafee");
+    	authorEntity.setAuthorName("author1");
 		authorRepository.save(authorEntity);
 		Book bookEntity = new Book();
 		bookEntity.setBookCode("code1");
@@ -42,16 +40,15 @@ public class BookRepositoryTest {
         bookRepository.save(bookEntity);
         
         List<Book> bookList = bookRepository.findAll();
-//        assertEquals(1, bookList.size());
         assertThat(bookList.size()).isGreaterThan(0);
-//        assertThat(bookList.get(0).getBookCode()).isEqualTo("code1");
-//        assertNotNull(bookList.get(0).getAuthor());
+        assertThat(bookList.get(0).getBookCode()).isEqualTo("code1");
+        assertNotNull(bookList.get(0).getAuthor());
     }
     
     @Test
     public void testFindById() {
     	Author authorEntity = new Author();
-    	authorEntity.setAuthorName("John Mcafee");
+    	authorEntity.setAuthorName("author1");
 		authorRepository.save(authorEntity);
 		Book bookEntity = new Book();
 		bookEntity.setBookCode("code1");
@@ -70,7 +67,7 @@ public class BookRepositoryTest {
     public void testFindByBookCode() {
     	
     	Author authorEntity = new Author();
-    	authorEntity.setAuthorName("John Mcafee");
+    	authorEntity.setAuthorName("author1");
 		authorRepository.save(authorEntity);
 		Book bookEntity = new Book();
 		bookEntity.setBookCode("code1");
@@ -85,14 +82,12 @@ public class BookRepositoryTest {
         assertThat(bookExpected.getBookCode()).isEqualTo("code1");
         assertThat(bookExpected.getBookName()).isEqualTo("book1");
     }
-//    
-//    // TEST SAVE
-//	
-//	
+
+    
     @Test
     public void testDeleteById() {
     	Author authorEntity = new Author();
-    	authorEntity.setAuthorName("John Mcafee");
+    	authorEntity.setAuthorName("author1");
 		authorRepository.save(authorEntity);
 		Book bookEntity = new Book();
 		bookEntity.setBookCode("code1");

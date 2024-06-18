@@ -28,7 +28,7 @@ public class DBInitializer implements CommandLineRunner {
 		author1.setAuthorName("K R Venugopal");
 		author2.setAuthorName("Denis Ritchie");
 		author3.setAuthorName("Dr S Radhakrishnan");
-		author4.setAuthorName("John Mcafee");
+		author4.setAuthorName("Burtrand Russel");
 		
 		authorRepository.saveAll(Arrays.asList(author1, author2, author3, author4));
 		

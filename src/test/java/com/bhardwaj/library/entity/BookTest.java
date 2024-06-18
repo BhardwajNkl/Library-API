@@ -3,7 +3,6 @@ package com.bhardwaj.library.entity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class BookTest {
 
 	private Book book;
-    private Author mockAuthor;
+    private Author author;
 
     @BeforeEach
     public void setUp() {
-        mockAuthor = mock(Author.class);
+    	author = mock(Author.class);
         book = new Book();
     }
 
@@ -31,12 +30,12 @@ public class BookTest {
 
     @Test
     public void testAllArgumentsConstructor() {
-        Book book = new Book(1, "code1", "book1", "Monday, June 10, 2022", mockAuthor);
+        Book book = new Book(1, "code1", "book1", "Monday, June 10, 2022", author);
         assertEquals(1, book.getBookId());
         assertEquals("code1", book.getBookCode());
         assertEquals("book1", book.getBookName());
         assertEquals("Monday, June 10, 2022", book.getDateAdded());
-        assertEquals(mockAuthor, book.getAuthor());
+        assertEquals(author, book.getAuthor());
     }
 
     @Test
@@ -45,12 +44,12 @@ public class BookTest {
         book.setBookCode("code1");
         book.setBookName("book1");
         book.setDateAdded("Monday, June 10, 2022");
-        book.setAuthor(mockAuthor);
+        book.setAuthor(author);
 
         assertEquals(1, book.getBookId());
         assertEquals("code1", book.getBookCode());
         assertEquals("book1", book.getBookName());
         assertEquals("Monday, June 10, 2022", book.getDateAdded());
-        assertEquals(mockAuthor, book.getAuthor());
+        assertEquals(author, book.getAuthor());
     }
 }

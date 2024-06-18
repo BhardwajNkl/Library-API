@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bhardwaj.library.entity.Author;
 import com.bhardwaj.library.entity.Book;
 import com.bhardwaj.library.model.RequestedBookModel;
-import com.bhardwaj.library.service.AuthorService;
 import com.bhardwaj.library.service.BookService;
 
 @RestController

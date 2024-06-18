@@ -24,26 +24,26 @@ public class AuthorTest {
 
     @Test
     public void testAllArgumentsConstructor() {
-        Author author = new Author(1, "John Mcafee");
+        Author author = new Author(1, "name1");
         assertEquals(1, author.getAuthorId());
-        assertEquals("John Mcafee", author.getAuthorName());
+        assertEquals("name1", author.getAuthorName());
     }
 
     @Test
     public void testGettersAndSetters() {
         author.setAuthorId(1);
-        author.setAuthorName("John Mcafee");
+        author.setAuthorName("name1");
 
         assertEquals(1, author.getAuthorId());
-        assertEquals("John Mcafee", author.getAuthorName());
+        assertEquals("name1", author.getAuthorName());
     }
 
     @Test
     public void testToString() {
         author.setAuthorId(1);
-        author.setAuthorName("John Mcafee");
+        author.setAuthorName("name1");
 
-        String expectedString = "Author [authorId=1, authorName=John Mcafee]";
+        String expectedString = "Author [authorId=1, authorName=name1]";
         assertEquals(expectedString, author.toString());
     }
 }

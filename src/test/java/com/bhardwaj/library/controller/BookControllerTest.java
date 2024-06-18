@@ -39,13 +39,16 @@ public class BookControllerTest {
     @MockBean
     private BookService bookService;
 
+    Author author;
+    Book book1;
+    Book book2;
     private List<Book> books;
 
     @BeforeEach
     public void setUp() {
-        Author author = new Author(1, "Author One");
-        Book book1 = new Book(1, "Code1", "Book One", "2023-01-01", author);
-        Book book2 = new Book(2, "Code2", "Book Two", "2023-01-02", author);
+        author = new Author(1, "author1");
+        book1 = new Book(1, "code1", "book1", "Monday, June 10, 2022", author);
+        book2 = new Book(2, "code2", "book2", "Monday, June 10, 2022", author);
         books = Arrays.asList(book1, book2);
     }
 
@@ -55,8 +58,8 @@ public class BookControllerTest {
 
         mockMvc.perform(get("/book"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].bookName", is("Book One")))
-                .andExpect(jsonPath("$[1].bookName", is("Book Two")));
+                .andExpect(jsonPath("$[0].bookName", is("book1")))
+                .andExpect(jsonPath("$[1].bookName", is("book2")));
     }
 
     @Test
@@ -65,29 +68,27 @@ public class BookControllerTest {
 
         mockMvc.perform(get("/book/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.bookName", is("Book One")));
+                .andExpect(jsonPath("$.bookName", is("book1")));
     }
 
     @Test
     public void testAddBook() throws Exception {
-        Author author = new Author(1, "Author One");
-        RequestedBookModel requestedBookModel = new RequestedBookModel("Code3", "Book Three", "2023-01-03", "1");
-        Book newBook = new Book(3, "Code3", "Book Three", "2023-01-03", author);
+        RequestedBookModel requestedBookModel = new RequestedBookModel("code1", "book1", "Monday, June 10, 2022", "1");
         
-        when(bookService.addBook(any(RequestedBookModel.class))).thenReturn(newBook);
+        when(bookService.addBook(any(RequestedBookModel.class))).thenReturn(book1);
 
         mockMvc.perform(post("/book")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(requestedBookModel)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.bookName", is("Book Three")));
+                .andExpect(jsonPath("$.bookName", is("book1")));
     }
 
     @Test
     public void testUpdateBook() throws Exception {
-        Author author = new Author(1, "Author One");
-        RequestedBookModel requestedBookModel = new RequestedBookModel("Code1", "Updated Book One", "2023-01-01", "1");
-        Book updatedBook = new Book(1, "Code1", "Updated Book One", "2023-01-01", author);
+//        Author author = new Author(1, "Author One");
+        RequestedBookModel requestedBookModel = new RequestedBookModel("code1", "updated book1", "Monday, June 10, 2022", "1");
+        Book updatedBook = new Book(1, "Code1", "updated book1", "Monday, June 10, 2022", author);
         
         when(bookService.updateBook(any(RequestedBookModel.class))).thenReturn(updatedBook);
 
@@ -95,17 +96,16 @@ public class BookControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(requestedBookModel)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.bookName", is("Updated Book One")));
+                .andExpect(jsonPath("$.bookName", is("updated book1")));
     }
 
     @Test
     public void testDeleteBook() throws Exception {
-    	// SEE THIS AGAIN
         mockMvc.perform(delete("/book/1"))
                 .andExpect(status().isOk());
     }
 
-    // Helper method to convert object to JSON string
+    // helper method for this test class
     private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

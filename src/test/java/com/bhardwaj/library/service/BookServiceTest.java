@@ -3,7 +3,6 @@ package com.bhardwaj.library.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -42,7 +41,7 @@ public class BookServiceTest {
 
     @BeforeEach
     public void setUp() {
-        author = new Author(1, "John Mcafee");
+        author = new Author(1, "author1");
         book = new Book(1, "code1", "book1", "Monday, June 10, 2022", author);
         books = Arrays.asList(book);
     }
@@ -106,9 +105,6 @@ public class BookServiceTest {
 
     @Test
     public void testDeleteBookById() {
-    	// SEE THIS AGAIN
-        doNothing().when(bookRepository).deleteById(1);
-
         Book result = bookService.deleteBookById("1");
         assertNull(result);
     }

@@ -30,8 +30,8 @@ public class AuthorServiceTest {
 
 	@BeforeEach
 	public void setUp() {
-		Author author1 = new Author(1, "Author One");
-		Author author2 = new Author(2, "Author Two");
+		Author author1 = new Author(1, "author1");
+		Author author2 = new Author(2, "author2");
 		authors = Arrays.asList(author1, author2);
 	}
 
@@ -41,7 +41,7 @@ public class AuthorServiceTest {
 
         List<Author> result = authorService.getAuthors();
         assertEquals(2, result.size());
-        assertEquals("Author One", result.get(0).getAuthorName());
-        assertEquals("Author Two", result.get(1).getAuthorName());
+        assertEquals("author1", result.get(0).getAuthorName());
+        assertEquals("author2", result.get(1).getAuthorName());
     }
 }

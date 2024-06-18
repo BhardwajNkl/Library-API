@@ -1,5 +1,6 @@
 package com.bhardwaj.library.service;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -38,5 +39,16 @@ public class UserServiceTest {
         Boolean result = userService.verifyLoginCredentials(credentials);
         
         assertTrue(result);
+    }
+	
+	// useless test
+	@Test
+    public void testVerifyLoginCredentialsFailure() {
+        when(userRepository.existsByUsernameAndPassword(credentials.getUsername(),
+        		credentials.getPassword())).thenReturn(false);
+
+        Boolean result = userService.verifyLoginCredentials(credentials);
+        
+        assertFalse(result);
     }
 }

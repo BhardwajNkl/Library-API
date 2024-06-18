@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.bhardwaj.library.entity.Author;
 import com.bhardwaj.library.service.AuthorService;
 
-//@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(AuthorController.class)
 public class AuthorControllerTest {
@@ -37,8 +36,8 @@ public class AuthorControllerTest {
 
     @BeforeEach
     public void setUp() {
-        Author author1 = new Author(1, "Author One");
-        Author author2 = new Author(2, "Author Two");
+        Author author1 = new Author(1, "name1");
+        Author author2 = new Author(2, "name2");
         authors = Arrays.asList(author1, author2);
     }
 
@@ -48,7 +47,7 @@ public class AuthorControllerTest {
 
         mockMvc.perform(get("/author"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].authorName", is("Author One")))
-                .andExpect(jsonPath("$[1].authorName", is("Author Two")));
+                .andExpect(jsonPath("$[0].authorName", is("name1")))
+                .andExpect(jsonPath("$[1].authorName", is("name2")));
     }
 }
